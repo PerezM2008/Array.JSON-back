@@ -8,15 +8,20 @@
 //Importe do arquivo estados e cidades
 const dados = require('./estados_cidades')
 const MESSAGE_ERROR = {status : false, statuscode: 500, development: 'Matheus Perez'}
+
 //Retorna a lista de estados
 const getAllEstados = function(){
 
+    //Padrão do JSON que sera o retorno da função 
     let message = {status: true, statuscode: 200, development: 'Matheus Perez', uf: []}
+
 
     dados.listaDeEstados.estados.forEach(function(item){
     
     message.uf.push(item.sigla)
+
     });
+
     //Adiciona um elemento no JSON
     message.quantidade = message.uf.length
 
@@ -31,10 +36,37 @@ const getAllEstados = function(){
     
 }
 
+
+
+
 //Retorna os dados do estado filtrando pela Sigla
 const getEstadoBySigla = function(sigla){
 
+    let ufSigla = sigla.toUpperCase
+
+    let mensagem = {
+        status: true,
+        statuscode: 200, 
+        development: 'Matheus Perez',
+        uf: '', 
+        descricao: '', 
+        capital: '', 
+        regiao: ''
+    }
+
+    dados.listaDeEstados.estados.forEach(function(){
+        dados.listaDeEstados.find()
+    })
+
+
+    console.log(mensagem)
+
 }
+
+
+
+
+
 
 //Retorna a capital do estado por uma Sigla
 const getCapitalBySigla = function(sigla){
@@ -56,6 +88,10 @@ const getCidadesBySiglas = function(sigla) {
 
 }
 
+
+
+
+console.log (getEstadoBySigla('RJ'))
 
 module.exports = {
     getAllEstados
