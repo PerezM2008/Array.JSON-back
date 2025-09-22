@@ -41,31 +41,49 @@ app.use((require, response, next) => {
 //Request -> Recebe os dados da API
 //Response -> Envia os dados na API
 
+
+
 //EndPoint 
 app.get('/v1/estados', function(request, response){
-    var estados = dados.getAllEstados()
+ //   var estados = dados.getAllEstados()
+    var estados = dados.getEstadoBySigla()
 
     response.status(estados.statuscode)
     response.json(estados)
 
+    // response.status(estados.statuscode)
+    // response.json(estados)
+
 })
+
+
 
 //EndPoint encaminhado por PARAN
-app.get('/v1/estado/:uf', function(request, response){
+app.get('/v1/estadosSigla/:uf', function(request, response){
      let sigla = request.params.uf
+     var estadosSigla = dados.getEstadoBySigla(sigla)
 
      console.log(sigla)
-})
-//endPoin
-app.get('/v1/regiao/estado/:id', function(request, response){
-    let regiaoEstados = request.query.regiao
-    let sigla         = request.query.uf
-    let id            = request.params.id
 
-    console.log(regiaoEstados)
-    console.log(sigla)
-    console.log(id)
+     response.status(estadosSigla.statuscode)
+     response.json(estadosSigla)
+     
+    
+ 
 })
+
+
+//EndPoin
+// app.get('/v1/regiao/estado/:id', function(request, response){
+//     let regiaoEstados = request.query.regiao
+//     let sigla         = request.query.uf
+
+//     // console.log(regiaoEstados)
+//     // console.log(sigla)
+//     // console.log(id)
+// })
+
+
 
 //Start da API
 app.listen(PORT, function(){
