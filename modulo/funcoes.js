@@ -15,14 +15,13 @@ const getAllEstados = function(){
     //Padrão do JSON que sera o retorno da função 
     let message = {status: true, statuscode: 200, development: 'Matheus Perez', uf: []}
 
-
     dados.listaDeEstados.estados.forEach(function(item){
     
     message.uf.push(item.sigla)
 
     });
 
-    //Adiciona um elemento no JSON
+    //Adiciona um elemento no JSON (Elemento de contagem "Quantidade: 27")
     message.quantidade = message.uf.length
 
     //Apaga um elemento existente no JSON
@@ -33,8 +32,6 @@ const getAllEstados = function(){
         return message; //Resultado Verdadeiro da API 200
     else
         return MESSAGE_ERROR; //Resultado Falso da API 500
-    
-    
 }
 
 
@@ -64,12 +61,8 @@ const getEstadoBySigla = function(sigla){
             referenceByStates.descricao = item.nome
             referenceByStates.capital = item.capital
             referenceByStates.regiao = item.regiao
-        
         }
-           
-            
     })
-    
 if(referenceByStates.uf != ""){
     return referenceByStates;
 } else {
@@ -86,6 +79,24 @@ if(referenceByStates.uf != ""){
 
 //Retorna a capital do estado por uma Sigla
 const getCapitalBySigla = function(sigla){
+
+    let returnByCapital = {uf: "", descricao: "", capital: ""}
+
+    dados.listaDeEstados.estados.forEach(function(item){
+
+        if(sigla.toUpperCase() == item.sigla.toUpperCase()){
+            returnByCapital.uf = item.sigla
+            returnByCapital.descricao = item.nome
+            returnByCapital.capital = item.capital
+        }
+    })
+
+    if(returnByCapital.uf != ""){
+        return returnByCapital
+    }else{
+        return MESSAGE_ERROR
+    }
+
 
 }
 
@@ -107,5 +118,6 @@ const getCidadesBySiglas = function(sigla) {
 
 module.exports = {
     getAllEstados,
-    getEstadoBySigla
+    getEstadoBySigla,
+    getCapitalBySigla
 }
