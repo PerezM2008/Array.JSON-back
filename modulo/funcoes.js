@@ -80,7 +80,13 @@ if(referenceByStates.uf != ""){
 //Retorna a capital do estado por uma Sigla
 const getCapitalBySigla = function(sigla){
 
-    let returnByCapital = {uf: "", descricao: "", capital: ""}
+    let returnByCapital = {
+        status: true,
+        statuscode: 200, 
+        development: 'Matheus Perez',
+        uf: "",
+        descricao: "",
+        capital: ""}
 
     dados.listaDeEstados.estados.forEach(function(item){
 
@@ -93,31 +99,109 @@ const getCapitalBySigla = function(sigla){
 
     if(returnByCapital.uf != ""){
         return returnByCapital
+        // console.log (returnByCapital)
     }else{
         return MESSAGE_ERROR
     }
-
 
 }
 
 //Retorna a lista de estados filtrando pela Região
 const getEstadosByRegiao = function(regiao){
 
-}
+    let regiaoByStates = {
+        status: true,
+        statuscode: 200,
+        development: 'Matheus Perez',
+        regiao: '',
+        estados:[]
+    }
+
+    let statesFilter = dados.listaDeEstados.estados.filter(function(item){
+        return item.regiao.toUpperCase() === regiao.toUpperCase()
+    })
+
+    if (statesFilter.length > 0 ){
+        statesFilter.forEach(function(estados){
+
+            regiaoByStates.estados.push({
+
+                uf: estados.sigla,
+                descricao: estados.nome
+
+            })
+
+        })
+    }
+
+    if(regiaoByStates.estados != 0){
+            return regiaoByStates
+            // console.log(regiaoByStates)
+        }else{
+            return MESSAGE_ERROR
+        }
+        
+    }
+
+
 
 //Retorna a lista de estados e formam a capital de um país filtrando pelo País
 const getEstadoIsCapitalByCountry = function(pais){
 
+    
 }
 
 //Retorna as cidades filtrando pela sigla do Estado
 const getCidadesBySiglas = function(sigla) {
 
+    let siglaFilterByCidade = {
+        uf: '',
+        descricao: '',
+        quantidade_cidades: '',
+        cidades: []
+
+    }
+
+    let cidadesFilter = dados.listaDeEstados.estados.find(function(item){
+        return item.sigla.toUpperCase() === sigla.toUpperCase()
+        
+    })
+
+
+    dados.listaDeEstados.estados.forEach(function(item){
+        if(sigla.toUpperCase() == item.sigla.toUpperCase()){
+
+           siglaFilterByCidade.uf = item.sigla
+           siglaFilterByCidade.descricao = item.nome
+    }
+
+    })
+    
+
+    if(cidadesFilter){
+
+        siglaFilterByCidade.cidades = cidadesFilter.cidades.map(cidade => cidade.nome)
+        siglaFilterByCidade.quantidade_cidades = siglaFilterByCidade.cidades.length
+    }
+
+    if(siglaFilterByCidade != 0){
+        return siglaFilterByCidade
+        // console.log (siglaFilterByCidade)
+    }else{
+        return MESSAGE_ERROR
+    }
 }
 
+
+//Retornos no terminal
+// 3. console.log(getCapitalBySigla('AC'))
+// 4. console.log (getEstadosByRegiao('SUL'))
+// 6. console.log (getCidadesBySiglas('AC'))
 
 module.exports = {
     getAllEstados,
     getEstadoBySigla,
-    getCapitalBySigla
+    getCapitalBySigla,
+    getEstadosByRegiao,
+    getCidadesBySiglas
 }
